@@ -48,7 +48,7 @@
     left:50%;
     margin:-5px 0 0 -40px;
     font-weight:bold;
-    fong-size:14px;
+    font-size:14px;
     text-align:center;
 }
 

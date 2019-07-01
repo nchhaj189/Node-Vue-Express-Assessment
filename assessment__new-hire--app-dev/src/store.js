@@ -25,25 +25,26 @@ export default new Vuex.Store({
     actions: {
         deleteEvent: function( { commit, state }, eventId ) {
           return axios({
-            method: 'DELETE',
-            url: `${API_ENDPOINT}/delete/${eventId}`,
+            method: 'DELETE', //was 'DELETE'
+            url: `${API_ENDPOINT}/remove/${eventId}`, //was '/delete/'
             headers: { authorization: state.basicToken }
           });
         },
         modifyEvent: function( { commit, state }, calendarEvent ) {
           return axios({
-            method: 'POST',
-            url: `${API_ENDPOINT}/update`,
-            data: calendarEvent,
+            method: 'PUT', //was 'POST'
+            url: `${API_ENDPOINT}/update/${calendarEvent.name}`, //no ${eventID} before
+            data: {"data": [calendarEvent]},
             headers: { authorization: state.basicToken }
           });
         },
         createEvent: function( { commit, state }, calendarEvent ) {
           calendarEvent.id = uuidv1();
+          console.log(calendarEvent)
           return axios({
-            method: 'POST',
-            url: `${API_ENDPOINT}/create`,
-            data: calendarEvent,
+            method: 'POST', //was 'POST'
+            url: `${API_ENDPOINT}/create/${calendarEvent.name}`, //no ${eventID} before
+            data: {"data": [calendarEvent]},
             headers: { authorization: state.basicToken }
           });
         },

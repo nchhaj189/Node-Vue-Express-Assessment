@@ -28,7 +28,7 @@ export default {
     methods: {
         deleteEvent: function( evt ) {
             evt.preventDefault();
-            this.$store.dispatch( 'deleteEvent', this.thisEvent.id )
+            this.$store.dispatch( 'deleteEvent', this.thisEvent.id)
             .then( res => {
               this.$store.dispatch( 'getList' );
             }).catch( ( err, body ) => {
