@@ -33,7 +33,7 @@ export default new Vuex.Store({
         modifyEvent: function( { commit, state }, calendarEvent ) {
           return axios({
             method: 'PUT', //was 'POST'
-            url: `${API_ENDPOINT}/update/${calendarEvent.name}`, //no ${eventID} before
+            url: `${API_ENDPOINT}/update/${calendarEvent.id}`, //no ${eventID} before
             data: {"data": [calendarEvent]},
             headers: { authorization: state.basicToken }
           });
@@ -63,16 +63,15 @@ export default new Vuex.Store({
         getList: function( { commit, state } ) {
 
           // TODO remove return, actually implement endpoint
-            return;
+            return axios({
+              method: 'GET',
+              url: `${API_ENDPOINT}/peek`,
+              headers: { authorization: state.basicToken }
+            }).then( res => {
+              commit( 'updateList', res.data );
+              console.log(res.data);
+            });
           // TODO end remove return
-
-          axios({
-            method: 'GET',
-            url: `${API_ENDPOINT}/list`,
-            headers: { authorization: state.basicToken }
-          }).then( res => {
-            commit( 'updateList', res.data );
-          });
         }
     }
 })
