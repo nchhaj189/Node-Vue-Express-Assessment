@@ -38,7 +38,6 @@ export default new Vuex.Store({
                   break;
                 }
             }
-            console.log(events_list);
           });
           if(events_list.length == 0) {
             return axios({
@@ -56,7 +55,6 @@ export default new Vuex.Store({
         },
 
         modifyEvent: async function( { commit, state }, calendarEvent ) {
-          //Vuex.Store.actions.deleteEvent({commit, state}, calendarEvent);
           let events = [];
           let event = [];
           event[0] = calendarEvent;
@@ -68,8 +66,6 @@ export default new Vuex.Store({
             headers: { authorization: state.basicToken }
           }).then( res => {
             events = res;
-            //console.log(events);
-            console.log(calendarEvent.dateTime)
             for(var i = 0; i < res.data.message.length; i++) {
               for(var j = 0; j < res.data.message[i].data.events.length; j++) {
                 if(res.data.message[i].name === calendarEvent.dateTime.split("T")[0]) {
@@ -80,7 +76,6 @@ export default new Vuex.Store({
               }
             }
           });
-          console.log(alreadyExists)
           let message_index;
           if(alreadyExists) {
             let event_index;
@@ -108,7 +103,6 @@ export default new Vuex.Store({
               });
             }
           }
-          console.log(update);
           if(update) {
             return axios({
               method: 'PUT', //was 'POST'
@@ -183,7 +177,6 @@ export default new Vuex.Store({
                   events: res.data.message[i].data.events
                 };
               }
-              console.log(front_json);
               commit( 'updateList', front_json );
             });
           // TODO end remove return

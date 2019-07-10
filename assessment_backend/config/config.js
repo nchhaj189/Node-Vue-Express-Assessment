@@ -1,2 +1,2 @@
-let username = 'test'
-let password = 'password'   
+let hashstring = "basic dGVzdDpwYXNzd29yZA==";
+module.exports =  hashstring;  

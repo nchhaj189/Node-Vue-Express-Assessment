@@ -3,8 +3,6 @@ const api = async (action, rowkey, body) => {
     let base_url = 'https://crud-api.azurewebsites.net/api/';
     
     resetOptions();
-
-    console.log(`action: ${action} rowkey: ${rowkey} body: ${body}\n`)
     
     if(rowkey) {
         base_url += action + '/' + rowkey;
@@ -28,8 +26,6 @@ const api = async (action, rowkey, body) => {
                 _method = 'PUT';
                 break;
         };
-
-        console.log(`method: ${_method}`);
         
         options = {
             method: _method,
@@ -66,7 +62,6 @@ const api = async (action, rowkey, body) => {
 
     function response(error, response, body) {
         if(!error && response.statusCode == 200) {
-            console.log('error code: ' + response.statusCode);
             return body;
         } else {
             return 'error'

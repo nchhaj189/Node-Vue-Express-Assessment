@@ -38,11 +38,6 @@ export default {
         modifyEvent: function( evt ) {
             evt.preventDefault();
             this.$router.push({ name: 'modify', params: { thisEvent: this.thisEvent }})
-            // .then( res => {
-            //   this.$store.dispatch( 'getList' );
-            // }).catch( ( err, body ) => {
-            //   this.$toasted.show( 'Overlapping Event', { position: 'top-left', theme: 'bubble', type: 'error' } ).goAway( 2000 );
-            // });
         }
     },
     created: function() {

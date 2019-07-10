@@ -24,7 +24,6 @@ export default {
     mounted: function(){
         this.message = 'Loading Events...';
         this.$store.dispatch( 'getList' ).then( res => {
-            console.log(`number of events: ${this.$store.state.events.length}`);
             if( this.$store.state.events.length === 0 ) {
               this.message = 'No Events';
             }
