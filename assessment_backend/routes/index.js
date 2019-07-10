@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const test = require('./test');
+const deleteUpdate = require('./deleteUpdate');
 const create = require('./create');
 const peek = require('./peek');
 const read = require('./read');
@@ -14,6 +14,8 @@ router.post('/create/:rowkey', create);
 router.delete('/remove/:rowkey', remove);
 
 router.put('/update/:rowkey', update);
+
+router.put('/deleteUpdate/:rowkey', deleteUpdate);
 
 router.get('/read/:rowkey', read);
 

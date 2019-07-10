@@ -54,7 +54,7 @@ export default {
             this.dispatchChange( evt, 'createEvent' );
         },
         modifyEvent: function( evt ) {
-            this.dispatchChange( evt, 'modifyEvent' );
+            this.dispatchChange( evt, 'modifyEvent' )
         },
         dispatchChange: function( evt, type = 'createEvent' ) {
             evt.preventDefault();
@@ -65,7 +65,8 @@ export default {
                 this.$router.push( '/' );
             }).catch( err => {
                 this.working = false;
-                const message = err.response ? err.response.data : err.message || 'Unknown Error';
+                const message = err.response ? err.response.data.message : err.message || 'Unknown Error';
+                this.$store.dispatch( 'getList' );
                 this.$toasted.show(
                   message,
                   {
