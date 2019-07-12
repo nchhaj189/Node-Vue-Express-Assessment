@@ -1,9 +1,26 @@
 const api = require('../db/api');
 const timeParse = require('../helpers/time-parse');
+const read = require('./read');
+const remove = require('./remove');
 
-const update = async (req, res) => {
-    const dataApi = await api('update', req.params.rowkey, JSON.stringify(req.body));
-    res.send(dataApi);
+const deleteUpdate = async (req, res) => {
+    let events_list = [];
+    let dataApi = await read(req, res);
+    dataApi = JSON.parse(dataApi);
+    events_list = dataApi.message.events;
+    for(var i = 0; i < events_list.length; i++) {
+        if(events_list[i].id === req.body.data.id) {
+            events_list.splice(i,1);
+            break;
+        }
+    }
+    
+    if(events_list.length === 0) {
+        await api('remove', req.params.rowkey);
+    } else {
+        const body = { "data": { "events": events_list } };
+        await api('update', req.params.rowkey, JSON.stringify(body));
+    }
 }
 
-module.exports = update;
+module.exports = deleteUpdate;
