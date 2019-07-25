@@ -16,11 +16,12 @@ const deleteUpdate = async (req, res) => {
     }
     
     if(events_list.length === 0) {
-        await api('remove', req.params.rowkey);
+        let remove = await api('remove', req.params.rowkey);
     } else {
         const body = { "data": { "events": events_list } };
-        await api('update', req.params.rowkey, JSON.stringify(body));
+        let remove = await api('update', req.params.rowkey, JSON.stringify(body));
     }
+    return;
 }
 
 module.exports = deleteUpdate;

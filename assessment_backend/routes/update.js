@@ -19,7 +19,11 @@ const update = async (req, res) => {
         for(var j = 0; j < messages[i].data.events.length; j++) {
             let currentDate = messages[i].name;
             let currentEventID = messages[i].data.events[j].id;
-
+            if(calendarEvent === messages[i].data.events[j]) {
+                console.log('no update');
+                res.status(200);
+                return;
+            }
             if(currentDate === calendarEventDate) {
                 update = true;
                 currentDateExistsInArray = true;
@@ -32,12 +36,14 @@ const update = async (req, res) => {
         }
     }
 
+    let removed = false;
     if(messageIndex >= 0 && eventIndex >= 0 && !deleted) {
         messages[messageIndex].data.events.splice(eventIndex, 1);
         const body = { "data": { "events": messages[messageIndex].data.events} };
         await api('update', messages[messageIndex].name.split("T")[0], JSON.stringify(body));
         deleted = true;
         if(messages[messageIndex].data.events.length === 0) {
+            removed = true;
             await api('remove', messages[messageIndex].name.split("T")[0]);
         }
     }
@@ -46,9 +52,14 @@ const update = async (req, res) => {
     if(!currentDateExistsInArray && !update) {
         messages[messageIndex].data.events.splice(eventIndex, 1);
         const body = { "data": { "events": messages[messageIndex].data.events} };
-        await api('update', messages[messageIndex].name.split("T")[0], JSON.stringify(body));
-        let createJson = await api('create', calendarEventDate, JSON.stringify(req.body)); 
-        res.send(createJson);
+        if(!removed) {
+            await api('update', messages[messageIndex].name.split("T")[0], JSON.stringify(body));
+            let createJson = await api('create', calendarEventDate, JSON.stringify(req.body)); 
+            res.send(createJson);
+        } else {
+            let createJson = await api('create', calendarEventDate, JSON.stringify(req.body)); 
+            res.send(createJson);
+        }
         return; 
     }
 

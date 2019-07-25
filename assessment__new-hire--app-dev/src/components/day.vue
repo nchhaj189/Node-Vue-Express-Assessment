@@ -32,11 +32,13 @@ export default {
     div.calendar__day {
         margin:1em 0;
         text-align:left;
+        color: #fff;
         .title{
             padding: .5em 0 .5em 1em;
             margin-bottom: 1em;
             text-align: left;
-            background-color: rgba( 0, 0, 0, .125 );
+            //background-color: rgba( 0, 0, 0, .125 );
+            background-color: #16A9CB;
             font-weight: bold;
         }
         .events {
